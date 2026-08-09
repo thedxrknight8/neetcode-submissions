@@ -2,14 +2,11 @@ class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
         m = defaultdict(list)
 
-        for i in range(len(strs)):
-            sorted_s = sorted(strs[i])
-            
-
-            m["".join(sorted_s)].append(strs[i])
+        for s in strs:
+            m["".join(sorted(s))].append(s)
         
-        ret = []
-        for k in m:
-            ret.append(m[k])
+        l = []
+        for key in m:
+            l.append(m[key])
         
-        return ret
+        return l
