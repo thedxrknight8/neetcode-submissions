@@ -1,34 +1,20 @@
 class Solution:
     def isValidSudoku(self, board: List[List[str]]) -> bool:
-        # check rows
-        # check columns
-        # then check sub-boxes
-        for r in range(len(board)):
-            visited = set()
-            for c in range(len(board[0])):
-                if board[r][c] in visited and board[r][c] != '.':
+        rows = [set() for _ in range(len(board))]
+        cols = [set() for _ in range(len(board[0]))]
+        squares = [[set() for _ in range(len(board[0]) // 3)] for _ in range(len(board) // 3)] 
+
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                if board[i][j] == '.':
+                    continue
+                if board[i][j] in rows[i] or board[i][j] in cols[j] or board[i][j] in squares[i // 3][j // 3]:
                     return False
-                visited.add(board[r][c])
-        print('here')
-        for c in range(len(board[0])):
-            visited = set()
-            for r in range(len(board)):
-                if board[r][c] in visited and board[r][c] != '.':
-                    return False
-                visited.add(board[r][c])
-        print('here')
-        for r in range(0, len(board), 3):
-            for c in range(0, len(board[0]), 3):
-                visited = set()
-                for rt in range(r, r + 3):
-                    for ct in range(c, c + 3):
-                        if board[rt][ct] in visited and board[rt][ct] != '.':
-                            return False
-                        visited.add(board[rt][ct])
-        print('here')
-        return True
-
-
-
+                else:
+                    rows[i].add(board[i][j])
+                    cols[j].add(board[i][j])
+                    squares[i // 3][j // 3].add(board[i][j])
+        
+        return True 
 
         
