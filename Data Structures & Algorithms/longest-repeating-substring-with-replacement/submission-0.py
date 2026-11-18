@@ -1,26 +1,23 @@
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
-        # maintain a map with the characters and the count
-        # whenever a character count reaches 0, then you can stop and remove that key
-        # however, when the len is greater than k + 1, you have to increment left
-        
+        # we can use left and right pointers
+        # essentially, move left until `len(s) - k > most_frequent`
 
+        ret = 0
+        left = 0 
+        right = 0
+
+        mo = 0        
         m = defaultdict(int)
-
-        left, right = 0, 0
-        count = 0
-        most_occuring_count = 0
 
         while left <= right and right < len(s):
             m[s[right]] += 1
-            most_occuring_count = max(most_occuring_count, m[s[right]])
-            while left <= right and right - left + 1 - most_occuring_count > k:
+            mo = max(mo, m[s[right]])
+            if right - left + 1 - mo > k:
                 m[s[left]] -= 1
-                if m[s[left]] == 0:
-                    del m[s[left]]
                 left += 1
-            count = max(count, right - left + 1)
+            ret = max(right - left + 1, ret)
             right += 1
-        
-        return count
-                    
+
+        return ret
+
