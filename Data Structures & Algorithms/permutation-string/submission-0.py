@@ -1,17 +1,21 @@
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
-        m1 = Counter(s1)
-        m2 = defaultdict(int)
+        s1_count = Counter(s1)
+        s2_count = defaultdict(int)
 
         left = 0
         for right in range(len(s2)):
-            m2[s2[right]] += 1
-            while right - left + 1 > len(s1):
-                m2[s2[left]] -= 1
-                if m2[s2[left]] == 0:
-                    del m2[s2[left]]
+            s2_count[s2[right]] += 1
+            if right - left + 1 > len(s1):
+                s2_count[s2[left]] -= 1
+                if s2_count[s2[left]] == 0:
+                    del s2_count[s2[left]]
                 left += 1
-            if m2 == m1:
+            
+            if s2_count == s1_count:
                 return True
+        
         return False
+                
+                
             
